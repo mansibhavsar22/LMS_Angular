@@ -10,8 +10,13 @@ export class AppService {
 
   constructor(private http: HttpClient) { }
 
-   public Books(){
+  public Books(){
+    return this.http.get((this.BaseURl) + "Books");
+  }
+
+  public Booksearch(searchdata:any){
     debugger;
-    return this.http.get(this.BaseURl + "Books");
+    console.log(searchdata);
+    return this.http.post(this.BaseURl + "Booksearch",searchdata);    
   }
 }
