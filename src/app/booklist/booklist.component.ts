@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
+import { Router } from '@angular/router';
+// import { BooksModel } from '../Bookmodel';
 
+declare var $ : any;
 
 @Component({
   selector: 'app-booklist',
@@ -13,23 +16,77 @@ export class BooklistComponent implements OnInit {
   categorylist: any;
   publisherlist: any;
 
-  constructor(private serviceobj: AppService) {
+  PageNumber: any = 1;
+  PageSize: any;
+  TotalRecords: any;
+  count: any;
+  pageField:[];
+  TotalPages: any;
+  exactPageList: any;
+
+  constructor(public serviceobj: AppService,private router: Router) {
+    debugger;
     this.getlist();
   }
 
+  Close(){
+    $("#addmodal").modal("hide");
+  }
+
+  ShowModal(){
+    $("#addmodal").modal("show");
+  }
+
+  AddComponent() {
+    this.router.navigateByUrl('/addbook');
+};
+
   getlist() {
-    this.serviceobj.Books().subscribe((data: any) => {
+    this.serviceobj.Books(this.PageNumber, this.PageSize).subscribe((data: any) => {
+      debugger;
       this.bookslist = data.bookslist;
       this.categorylist = data.categorieslist;
       this.publisherlist = data.publisherslist;
+      this.Totalcount();
     });
   }
+
   ngOnInit(): void {}
 
-  onSumbit(searchdata: any){
-    this.serviceobj.Booksearch(searchdata).subscribe((data: any) =>{
+  onClick(page:any, i:any) {
+    this.bookslist = [];
+    this.PageNumber = [];
+    this.PageNumber[i] = true;
+    this.PageNumber = page;
+    this.getlist();
+  }
+
+  onSumbit(searchdata: any) {
+    debugger;
+    this.serviceobj.Booksearch(searchdata).subscribe((data: any) => {
       this.bookslist = data.bookslist;
     });
-    console.log(searchdata);
+  }
+
+  //Method For Pagination
+  totalNoOfPages() {
+    this.TotalPages = Number(this.count / this.PageSize);
+    let tempPageData = this.TotalPages.toFixed();
+    if (Number(tempPageData) < this.TotalPages) {
+      this.exactPageList = Number(tempPageData) + 1;
+      this.serviceobj.exactPageList = this.exactPageList;
+    } else {
+      this.exactPageList = Number(tempPageData);
+      this.serviceobj.exactPageList = this.exactPageList;
+    }
+    this.serviceobj.pageOnLoad();
+    this.pageField = this.serviceobj.pageField;
+  }
+
+  Totalcount() {
+    this.serviceobj.Books(this.PageNumber,this.PageSize).subscribe((res: any) => {
+      this.count = res;
+      this.totalNoOfPages();
+    });
   }
 }
