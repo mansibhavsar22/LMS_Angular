@@ -25,7 +25,7 @@
         <td>{{ book.PublisherName }}</td>
         <td><button type="button" class="btn btn-info" (click)="OpenDailog(book.BookId)">Edit</button></td>
         <!-- <td><button type="button" class="btn btn-info" (click)="Edit(book.BookId)">Edit</button></td> -->
-        <td><button type="button" class="btn btn-danger" (click)="Delete(book.BookId)">Delete</button></td>
+        <td><button type="button" class="btn btn-danger" (click)="DeleteEvent.emit(book)">Delete</button></td>
       </tr>
     </tbody>
   </table>
@@ -44,8 +44,62 @@
             <div style="text-align: center;">
               Page {{PageNumber}} of {{serviceobj.exactPageList}} Total page
             </div>
+            <br>
+            <br>
           </div>
         </div>
       </div> 
+
+      <!-- <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-center">
+        <li [ngClass]="{'disabled':pager.currentPage === 1}">
+          <a class="page-link" (click)="setPage(1)">First</a>
+        </li>
+        <li [ngClass]="{disabled: pager.currentPage === 1 }">
+          <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+        </li>
+        <li *ngFor="let page of pager.pages" [ngClass]="{'active': pager.currentPage === page}">
+          <a class="page-link" (click)="setPage(page)">{{page}}</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+        </li>
+      </ul> -->
   </div>
 </div>
+
+<!-- <ng-template #content let-c="close" let-d="dismiss">    
+  <div class="modal-header">    
+      <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>    
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">    
+          <span aria-hidden="true">×</span>    
+      </button>    
+  </div>    
+  <div class="modal-body">    
+      <p>Are you sure to delete this?</p>    
+  </div>    
+  <div class="modal-footer">    
+      <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">Cancel</button>    
+      <button type="button" class="btn btn-outline-dark" (click)="c('yes')">Yes</button>    
+  </div>    
+</ng-template> 
+
+<div class="modal fade" id="deletemodal">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h3 class="modal-title">Delete Book</h3>
+          </div>
+          <div class="modal-body">
+              <h4>Are you sure, you want to delete ? </h4>
+              <h4>Book - </h4>
+          </div>
+          <div class="modal-footer">
+              <a href="#" class="btn btn-default" data-dismiss="modal" (click)="Closemodal()">Cancel</a>
+              <a href="#" class="btn btn-success">Confirm</a>
+          </div>
+      </div>
+  </div>
+</div> -->

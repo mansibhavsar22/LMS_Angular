@@ -33,6 +33,15 @@ export class BookserviceService {
     return this.http.post(this.BaseURl + 'BookInsertPost', insertdata);
   }
 
+  BookId:any;
+  Id:any
+  public Delete(){
+    var a= {BookId:this.Id};
+   // console.log(Id);
+    debugger;
+    return this.http.post(this.BaseURl + 'Delete?Id=', a);
+  }
+
   pageOnLoad() {
     if (this.temppage == 0) {
       this.pageField = [];

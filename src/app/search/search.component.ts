@@ -30,6 +30,17 @@ export class SearchComponent implements OnInit {
     this.getlist();
   }
 
+  Delete(book: any) {
+    this.serviceobj.Id= book.BookId;
+    this.serviceobj.Delete().subscribe((data: any) => {
+      debugger;
+      this.getlist();
+      this.toastr.warning('Deleted Successfully', 'Delete', {
+        timeOut: 3000,
+      });
+    });
+  }
+
   onSumbit(searchdata: any) {
     debugger;
     this.serviceobj.Booksearch(searchdata).subscribe((data: any) => {
@@ -48,7 +59,7 @@ export class SearchComponent implements OnInit {
 
   ShowModal(){    
     const dialogRef = this.dialog.open(ModalformComponent,{
-      height: '510px',
+      height: '450px',
       width: '600px',
     });
   }

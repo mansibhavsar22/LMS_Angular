@@ -1,11 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalformComponent } from '../modalform/modalform.component';
 import { BookserviceService } from '../Services/bookservice.service';
-import {MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-// import { BooksModel } from '../Bookmodel';
+import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
+// import { getPager } from 'ap-pagination';
 
-declare var $ : any;
+declare var $: any;
 
 @Component({
   selector: 'app-booklist',
@@ -17,61 +18,80 @@ export class BooklistComponent implements OnInit {
   bookslist: any;
   categorylist: any;
   publisherlist: any;
+  closeResult: string;
 
   PageNumber: any = 1;
   PageSize: any;
   TotalRecords: any;
   count: any;
-  pageField:[];
+  pageField: [];
   TotalPages: any;
   exactPageList: any;
+  pager:any ={};
 
-  @Input() list:any;
+  @Output() DeleteEvent = new EventEmitter<any>();
+  @Input() list: any;
 
   constructor(
     public serviceobj: BookserviceService,
     public dialog: MatDialog,
-    private router: Router) {
-    // this.getlist();
+    private toastr: ToastrService
+  ) {}
+
+  // Delete(Id:any){
+  //   $("#deletemodal").modal("show");
+  //   debugger;
+  //   this.serviceobj.Delete(Id).subscribe((data:any) => {
+  //   });
+  //   debugger;
+  //   this.toastr.warning('Deleted Successfully', 'Delete', {
+  //     timeOut: 3000,
+  //   });
+  // }
+
+  // setPage(PageNumber:any) {
+  //   this.pager = getPager(this.TotalRecords, page, this.PageSize);    
+  //   }
+
+  Closemodal() {
+    $('#deletemodal').modal('hide');
   }
 
-  Delete(Id:any){
-
-  }
-
-  // Edit(Id:any) { 
+  // Edit(Id:any) {
   //   debugger;
   //     this.router.navigateByUrl('/addbook',{state: Id});
-  // } 
+  // }
 
-  OpenDailog(Id:any) { 
+  OpenDailog(Id: any) {
     debugger;
-    const dialogRef = this.dialog.open(ModalformComponent,{
+    const dialogRef = this.dialog.open(ModalformComponent, {
       height: '510px',
       width: '600px',
-      data:Id,
+      data: Id,
     });
-      dialogRef.afterClosed().subscribe((data:any) => {
-        debugger;
-        this.getlist();
-        window.location.reload();
-      });
+    dialogRef.afterClosed().subscribe((data: any) => {
+      debugger;
+      this.getlist();
+      window.location.reload();
+    });
   }
 
   getlist() {
-    this.serviceobj.Books(this.PageNumber, this.PageSize).subscribe((data: any) => {
-      this.bookslist = data.bookslist;
-      this.categorylist = data.categorieslist;
-      this.publisherlist = data.publisherslist;
-      this.Totalcount();
-    });
+    this.serviceobj
+      .Books(this.PageNumber, this.PageSize)
+      .subscribe((data: any) => {
+        this.bookslist = data.bookslist;
+        this.categorylist = data.categorieslist;
+        this.publisherlist = data.publisherslist;
+        this.Totalcount();
+      });
   }
 
   ngOnInit(): void {
     this.getlist();
   }
 
-  onClick(page:any, i:any) {
+  onClick(page: any, i: any) {
     this.bookslist = [];
     this.PageNumber = [];
     this.PageNumber[i] = true;
@@ -102,9 +122,15 @@ export class BooklistComponent implements OnInit {
   }
 
   Totalcount() {
-    this.serviceobj.Books(this.PageNumber,this.PageSize).subscribe((res: any) => {
-      this.count = res;
-      this.totalNoOfPages();
-    });
+    this.serviceobj
+      .Books(this.PageNumber, this.PageSize)
+      .subscribe((res: any) => {
+        this.count = res;
+        this.totalNoOfPages();
+      });
   }
 }
+function page(length: number, page: any, defaultEntrie: number): any {
+  throw new Error('Function not implemented.');
+}
+
