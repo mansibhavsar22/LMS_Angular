@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AppService } from '../app.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ModalformComponent } from '../modalform/modalform.component';
+import { BookserviceService } from '../Services/bookservice.service';
+import {MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 // import { BooksModel } from '../Bookmodel';
 
 declare var $ : any;
@@ -24,26 +26,40 @@ export class BooklistComponent implements OnInit {
   TotalPages: any;
   exactPageList: any;
 
-  constructor(public serviceobj: AppService,private router: Router) {
+  @Input() list:any;
+
+  constructor(
+    public serviceobj: BookserviceService,
+    public dialog: MatDialog,
+    private router: Router) {
+    // this.getlist();
+  }
+
+  Delete(Id:any){
+
+  }
+
+  // Edit(Id:any) { 
+  //   debugger;
+  //     this.router.navigateByUrl('/addbook',{state: Id});
+  // } 
+
+  OpenDailog(Id:any) { 
     debugger;
-    this.getlist();
+    const dialogRef = this.dialog.open(ModalformComponent,{
+      height: '510px',
+      width: '600px',
+      data:Id,
+    });
+      dialogRef.afterClosed().subscribe((data:any) => {
+        debugger;
+        this.getlist();
+        window.location.reload();
+      });
   }
-
-  Close(){
-    $("#addmodal").modal("hide");
-  }
-
-  ShowModal(){
-    $("#addmodal").modal("show");
-  }
-
-  AddComponent() {
-    this.router.navigateByUrl('/addbook');
-};
 
   getlist() {
     this.serviceobj.Books(this.PageNumber, this.PageSize).subscribe((data: any) => {
-      debugger;
       this.bookslist = data.bookslist;
       this.categorylist = data.categorieslist;
       this.publisherlist = data.publisherslist;
@@ -51,7 +67,9 @@ export class BooklistComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getlist();
+  }
 
   onClick(page:any, i:any) {
     this.bookslist = [];

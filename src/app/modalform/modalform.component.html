@@ -1,0 +1,50 @@
+<!--Add Modal -->
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Add Books</h2>
+            <a href="#" class="btn btn-secondary" data-dismiss="modal">&times;</a>
+        </div>
+        <div class="modal-body">
+            <div>
+                <form #addform="ngForm" (ngSubmit)="onSave(addform.value)">
+                    <div style="display: flex">
+                        <input type="hidden" name="BookId" [(ngModel)]="BookId" />
+                        <label class="form-control">Book Name :</label>&nbsp;&nbsp;&nbsp;
+                        <br />
+                        <input type="text" name=BookName [(ngModel)]="BookName" class="form-control" />
+                    </div>
+                    <br />
+
+                    <div style="display: flex">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div>
+                            <label class="form-control">Select Category :</label>
+                            <select class="form-control" name=CategoryId [(ngModel)]="CategoryId">
+                                <option [defaultSelected]="">Select Category</option>
+                                <option [value]="category.CategoryId" *ngFor="let category of categorylist">
+                                    {{category.CategoryName}}</option>
+                            </select>
+                        </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br />
+                        <div>
+                            <label class="form-control">Select Publisher :</label>
+                            <select class="form-control" name=PublisherId [(ngModel)]="PublisherId">
+                                <option [value]="0">Select Publisher</option>
+                                <option [value]="publisher.PublisherId" *ngFor="let publisher of publisherlist">
+                                    {{publisher.PublisherName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-danger" data-dismiss="modal" mat-dialog-close>Cancel</a>
+                        <button type="submit" class="btn btn-success" (click)="close()">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

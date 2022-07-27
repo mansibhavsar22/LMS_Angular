@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AppService } from '../app.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { BookserviceService } from '../Services/bookservice.service';
 
 @Component({
   selector: 'app-addbook',
@@ -10,27 +10,50 @@ import { AppService } from '../app.service';
 export class AddbookComponent implements OnInit {
   categorylist: any;
   publisherlist: any;
+  Id: any;
+  BookName: any;
+  IsActive: any;
 
-  constructor(public serviceobj: AppService, private router: Router) {
+  constructor(
+    public serviceobj: BookserviceService,
+    private _Activatedroute: ActivatedRoute,
+    private router: Router
+  ) {
+    debugger;
+    this.Id=this._Activatedroute.snapshot.params['Id'];
+    this.sub = this._Activatedroute.paramMap.subscribe((params) => {
+      console.log(params);
+      this.Id = params.get('Id');
+    });
     this.getlist();
   }
 
-  ngOnInit(): void {}
+  sub: any;
+  ngOnInit(): void {
+    debugger;
+    //this.Id=this._Activatedroute.snapshot.params['Id'];
+    this.sub = this._Activatedroute.paramMap.subscribe((params) => {
+      console.log(params);
+      this.Id = params.get('Id');
+    });
+  }
 
   onSave(insertdata: any) {
     this.serviceobj.BookInsertPost(insertdata).subscribe(() => {});
-    alert("Saved Successfully");
+    alert('Saved Successfully');
   }
 
   Cancel() {
-    this.router.navigateByUrl('/booklist');
+    this.router.navigateByUrl('/search');
   }
 
   getlist() {
-    this.serviceobj.BookInsert().subscribe((data: any) => {
+    this.serviceobj.BookInsert(this.Id).subscribe((data: any) => {
       debugger;
+      this.BookName = data.BookName;
       this.categorylist = data.categorieslist;
       this.publisherlist = data.publisherslist;
+      this.IsActive = data.IsActive;
     });
   }
 }

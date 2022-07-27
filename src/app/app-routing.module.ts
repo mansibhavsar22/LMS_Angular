@@ -2,11 +2,16 @@ import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddbookComponent } from './addbook/addbook.component';
 import { BooklistComponent } from './booklist/booklist.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {
     path:"",
-    component:BooklistComponent
+    component:SearchComponent
+  },
+  {
+    path:"addbook/:Id",
+    component:AddbookComponent
   },
   {
     path:"addbook",
@@ -15,6 +20,10 @@ const routes: Routes = [
   {
     path:"booklist",
     component:BooklistComponent
+  },
+  {
+    path:"search",
+    component:SearchComponent
   }
 ];
 

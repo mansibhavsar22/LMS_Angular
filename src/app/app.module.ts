@@ -6,21 +6,31 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BooklistComponent } from './booklist/booklist.component';
 import { AddbookComponent } from './addbook/addbook.component';
-
+import { SearchComponent } from './search/search.component';
+import { BookserviceService } from './Services/bookservice.service';
+import { ModalformComponent } from './modalform/modalform.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule} from '@angular/material/dialog';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     AppComponent,
     BooklistComponent,
-    AddbookComponent
+    AddbookComponent,
+    SearchComponent,
+    ModalformComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [BookserviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

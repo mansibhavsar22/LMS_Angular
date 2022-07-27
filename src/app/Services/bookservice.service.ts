@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
-export class AppService {
+export class BookserviceService {
   //Pagination Variables
   temppage: number = 0;
   pageField: any =[];
@@ -15,18 +15,17 @@ export class AppService {
   constructor(private http: HttpClient) {}
 
   public Books(PageNumber:any,PageSize:any) {
-    debugger;
     return this.http.get(this.BaseURl + 'Books?PageNumber=' + PageNumber);
   }
 
   public Booksearch(searchdata: any) {
-    debugger;
     console.log(searchdata);
     return this.http.post(this.BaseURl + 'Booksearch', searchdata);
   }
 
-  public BookInsert(){
-    return this.http.get(this.BaseURl + 'BookInsert');
+  public BookInsert(Id:any){
+    debugger;
+    return this.http.get(this.BaseURl + 'BookInsert?Id=' + Id);
   }
 
   public BookInsertPost(insertdata:any){
@@ -44,3 +43,4 @@ export class AppService {
     }
   }
 }
+
