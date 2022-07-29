@@ -1,12 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import { ModalformComponent } from '../modalform/modalform.component';
 import { BookserviceService } from '../Services/bookservice.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ToastrService } from 'ngx-toastr';
-// import { getPager } from 'ap-pagination';
-
-declare var $: any;
+import { BooksModel } from '../Booksmodel';
 
 @Component({
   selector: 'app-booklist',
@@ -20,47 +16,19 @@ export class BooklistComponent implements OnInit {
   publisherlist: any;
   closeResult: string;
 
-  PageNumber: any = 1;
-  PageSize: any;
-  TotalRecords: any;
-  count: any;
-  pageField: [];
+  PageNumber: any = 4;
+  PageSize: number;
+  TotalRecords: number;
   TotalPages: any;
-  exactPageList: any;
-  pager:any ={};
+  Bookmodel: BooksModel = new BooksModel();
 
   @Output() DeleteEvent = new EventEmitter<any>();
   @Input() list: any;
 
   constructor(
     public serviceobj: BookserviceService,
-    public dialog: MatDialog,
-    private toastr: ToastrService
+    public dialog: MatDialog
   ) {}
-
-  // Delete(Id:any){
-  //   $("#deletemodal").modal("show");
-  //   debugger;
-  //   this.serviceobj.Delete(Id).subscribe((data:any) => {
-  //   });
-  //   debugger;
-  //   this.toastr.warning('Deleted Successfully', 'Delete', {
-  //     timeOut: 3000,
-  //   });
-  // }
-
-  // setPage(PageNumber:any) {
-  //   this.pager = getPager(this.TotalRecords, page, this.PageSize);    
-  //   }
-
-  Closemodal() {
-    $('#deletemodal').modal('hide');
-  }
-
-  // Edit(Id:any) {
-  //   debugger;
-  //     this.router.navigateByUrl('/addbook',{state: Id});
-  // }
 
   OpenDailog(Id: any) {
     debugger;
@@ -77,60 +45,30 @@ export class BooklistComponent implements OnInit {
   }
 
   getlist() {
-    this.serviceobj
-      .Books(this.PageNumber, this.PageSize)
-      .subscribe((data: any) => {
-        this.bookslist = data.bookslist;
-        this.categorylist = data.categorieslist;
-        this.publisherlist = data.publisherslist;
-        this.Totalcount();
-      });
-  }
-
-  ngOnInit(): void {
-    this.getlist();
-  }
-
-  onClick(page: any, i: any) {
-    this.bookslist = [];
-    this.PageNumber = [];
-    this.PageNumber[i] = true;
-    this.PageNumber = page;
-    this.getlist();
+    alert(this.PageNumber + ' ' +this.PageSize)
+    this.serviceobj.Books().subscribe((data: any) => {
+      debugger;
+      this.bookslist = data.bookslist;
+      this.TotalRecords = data.TotalRecords;
+      this.PageSize = data.PageSize;
+      //this.PageNumber = data.PageNumber;
+      this.TotalPages = data.TotalPages;
+    });
   }
 
   onSumbit(searchdata: any) {
     debugger;
     this.serviceobj.Booksearch(searchdata).subscribe((data: any) => {
       this.bookslist = data.bookslist;
+      this.TotalRecords = data.TotalRecords;
+      this.PageSize = data.PageSize;
+      this.PageNumber = data.PageNumber;
+      this.TotalPages = data.TotalPages;
     });
   }
 
-  //Method For Pagination
-  totalNoOfPages() {
-    this.TotalPages = Number(this.count / this.PageSize);
-    let tempPageData = this.TotalPages.toFixed();
-    if (Number(tempPageData) < this.TotalPages) {
-      this.exactPageList = Number(tempPageData) + 1;
-      this.serviceobj.exactPageList = this.exactPageList;
-    } else {
-      this.exactPageList = Number(tempPageData);
-      this.serviceobj.exactPageList = this.exactPageList;
-    }
-    this.serviceobj.pageOnLoad();
-    this.pageField = this.serviceobj.pageField;
+  ngOnInit(): void {
+    this.getlist();
   }
 
-  Totalcount() {
-    this.serviceobj
-      .Books(this.PageNumber, this.PageSize)
-      .subscribe((res: any) => {
-        this.count = res;
-        this.totalNoOfPages();
-      });
-  }
 }
-function page(length: number, page: any, defaultEntrie: number): any {
-  throw new Error('Function not implemented.');
-}
-

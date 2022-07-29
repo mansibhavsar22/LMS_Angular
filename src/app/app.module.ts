@@ -12,6 +12,8 @@ import { ModalformComponent } from './modalform/modalform.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule} from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
+import { NgbAlertModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { ActionsComponent } from './actions/actions.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { ToastrModule } from 'ngx-toastr';
     BooklistComponent,
     AddbookComponent,
     SearchComponent,
-    ModalformComponent
+    ModalformComponent,
+    ActionsComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,9 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NgbPaginationModule,
+    NgbAlertModule,
   ],
   providers: [BookserviceService],
   bootstrap: [AppComponent]

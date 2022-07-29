@@ -320,30 +320,17 @@
             <button type="submit" class="btn btn-primary">Search</button>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <button type="reset" class="btn btn-danger">Reset</button>
-            &nbsp;&nbsp;&nbsp;&nbsp;     
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <!-- <button type="button" class="btn btn-primary" (click)="AddComponent()">Add Books</button> -->
         </div>
         <hr>
         <br />
-        <div>
-            <label class="col-md-l">Page Size :</label>
-            <select (change)="onSumbit(searchform.value)" class="form-control" name="PageSize" ngModel>Select Page Size
-                <option>3</option>
-                <option>5</option>
-                <option>10</option>
-            </select>&nbsp;&nbsp;&nbsp;&nbsp; 
-            
-            <div class="col-md-9">
-                <button type="button" class="btn btn-primary" (click)="ShowModal()">Add Books</button>
-            </div>
-            
-
-            <input type="hidden" [value]="1" name="PageNumber" ngModel />
-            <input type="hidden" value="TotalRecords" name="TotalRecords" ngModel />
-        </div>
     </form>
 
-    <app-booklist [list]="bookslist" (DeleteEvent)="Delete($event)"></app-booklist>
+    <hr>
+    <app-actions (PageSizeEvent)="onSumbit($event)"></app-actions>
+
+    <app-booklist [list]="bookslist" (DeleteEvent)="Delete($event)" (PageSizeEvent)="onSumbit($event)"></app-booklist>
 
     <svg id="clouds" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677"
         viewBox="0 0 2611.084 485.677">

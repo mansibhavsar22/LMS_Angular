@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ModalformComponent } from '../modalform/modalform.component';
 import { BookserviceService } from '../Services/bookservice.service';
 
 @Component({
@@ -15,15 +12,15 @@ export class SearchComponent implements OnInit {
   categorylist: any;
   publisherlist: any;
   bookslist: any;
+
   PageNumber: any = 1;
-  PageSize: any;
+  PageSize: number;
+  TotalRecords: number;
+  TotalPages: any;
 
   constructor(
     public serviceobj: BookserviceService,
-    private toastr : ToastrService,
-    public dialog: MatDialog,
-    private router: Router) { 
-    // this.getlist();
+    private toastr : ToastrService) { 
   }
 
   ngOnInit(): void {
@@ -45,26 +42,19 @@ export class SearchComponent implements OnInit {
     debugger;
     this.serviceobj.Booksearch(searchdata).subscribe((data: any) => {
       this.bookslist = data.bookslist;
+      this.TotalRecords = data.TotalRecords;
+      this.PageSize = data.PageSize;
+      this.PageNumber = data.PageNumber;
+      this.TotalPages = data.TotalPages;
     });
   }
 
   getlist() {
-    this.serviceobj.Books(this.PageNumber, this.PageSize).subscribe((data: any) => {
+    this.serviceobj.Books().subscribe((data: any) => {
       debugger;
       this.bookslist = data.bookslist;
       this.categorylist = data.categorieslist;
       this.publisherlist = data.publisherslist;
     });
   }
-
-  ShowModal(){    
-    const dialogRef = this.dialog.open(ModalformComponent,{
-      height: '450px',
-      width: '600px',
-    });
-  }
-
-  // AddComponent() {
-  //   this.router.navigateByUrl('/addbook');
-  // };
 }

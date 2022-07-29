@@ -41,7 +41,7 @@ export class ModalformComponent implements OnInit {
   }
 
   getlist() {
-    this.serviceobj.Books(this.PageNumber, this.PageSize).subscribe((data: any) => {
+    this.serviceobj.Books().subscribe((data: any) => {
       //debugger;
       this.categorylist = data.categorieslist;
       this.publisherlist = data.publisherslist;
