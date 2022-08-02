@@ -13,7 +13,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule} from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbAlertModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
-import { ActionsComponent } from './actions/actions.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { ActionsComponent } from './actions/actions.component';
     AddbookComponent,
     SearchComponent,
     ModalformComponent,
-    ActionsComponent
   ],
   imports: [
     BrowserModule,

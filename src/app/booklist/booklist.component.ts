@@ -16,13 +16,14 @@ export class BooklistComponent implements OnInit {
   publisherlist: any;
   closeResult: string;
 
-  PageNumber: any = 4;
+  PageNumber: number;
   PageSize: number;
   TotalRecords: number;
   TotalPages: any;
-  Bookmodel: BooksModel = new BooksModel();
+  book: BooksModel = new BooksModel();
 
   @Output() DeleteEvent = new EventEmitter<any>();
+  @Output() PageSizeEvent = new EventEmitter<any>();
   @Input() list: any;
 
   constructor(
@@ -45,20 +46,9 @@ export class BooklistComponent implements OnInit {
   }
 
   getlist() {
-    alert(this.PageNumber + ' ' +this.PageSize)
+    //alert(this.PageNumber + ' ' +this.PageSize)
     this.serviceobj.Books().subscribe((data: any) => {
       debugger;
-      this.bookslist = data.bookslist;
-      this.TotalRecords = data.TotalRecords;
-      this.PageSize = data.PageSize;
-      //this.PageNumber = data.PageNumber;
-      this.TotalPages = data.TotalPages;
-    });
-  }
-
-  onSumbit(searchdata: any) {
-    debugger;
-    this.serviceobj.Booksearch(searchdata).subscribe((data: any) => {
       this.bookslist = data.bookslist;
       this.TotalRecords = data.TotalRecords;
       this.PageSize = data.PageSize;
@@ -67,8 +57,16 @@ export class BooklistComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.getlist();
+  setData() {
+    this.serviceobj.Booksearch(this.book).subscribe((data: any) => {
+      debugger;
+      this.bookslist = data.bookslist;
+      this.book.TotalPages = data.TotalPages;
+    });
   }
 
+  ngOnInit(): void {
+    this.getlist();
+    //this.setData();
+  }
 }

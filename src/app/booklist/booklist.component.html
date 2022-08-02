@@ -1,4 +1,3 @@
-<br />
 
 <div class="d-flex justify-content-center">
   <h1>Books List</h1>
@@ -28,7 +27,14 @@
     </tbody>
   </table>
   <div class="d-flex justify-content-center">
-     <!-- Code for pagination -->
-    <ngb-pagination [collectionSize]="TotalRecords" [(page)]="PageNumber" (pageChange)="getlist()"></ngb-pagination>
+    <form #pagesizeform="ngForm">
+      <!-- <ngb-pagination [collectionSize]="TotalRecords" [(page)]="book.PageNumber" [maxSize]="5" [rotate]="true" [ellipses]="false" (pageChange)="PageSizeEvent.emit(pagesizeform.value)"
+      [boundaryLinks]="true"></ngb-pagination> -->
+      <label name="PageNumber" [(ngModel)]="PageNumber">
+        <ngb-pagination [collectionSize]="TotalRecords" [(page)]="PageNumber" [pageSize]="PageSize"
+          (pageChange)="PageSizeEvent.emit(pagesizeform.value)"></ngb-pagination>
+      </label>
+    </form>
+
   </div>
 </div>

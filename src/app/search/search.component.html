@@ -288,7 +288,7 @@
     <h2>Search Books</h2>
     <form #searchform="ngForm" (ngSubmit)="onSumbit(searchform.value)">
         <div style="display: flex">
-            <label class="form-control">Book Name :</label>&nbsp;&nbsp;&nbsp;
+            <label>Book Name :</label>
             <br />
             <input type="text" name=Bookname ngModel class="form-control" />
         </div>
@@ -296,7 +296,7 @@
 
         <div class="d-flex justify-content-center">
             <div>
-                <label class="form-control">Select Category :</label>
+                <label>Select Category :</label>
                 <select class="form-control" name=CategoryId ngModel>
                     <option [defaultSelected]="">Select Category</option>
                     <option [value]="category.CategoryId" *ngFor="let category of categorylist">
@@ -306,7 +306,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;
             <br />
             <div>
-                <label class="form-control">Select Publisher :</label>
+                <label>Select Publisher :</label>
                 <select class="form-control" name=PublisherId ngModel>
                     <option [value]="0">Select Publisher</option>
                     <option [value]="publisher.PublisherId" *ngFor="let publisher of publisherlist">
@@ -325,11 +325,32 @@
         </div>
         <hr>
         <br />
+        <table>
+            <tr class="col-md-12">
+                <td>
+                    <label class="col-md-12">Page Size :</label>
+                </td>
+                <td>
+                    <select (change)="onSumbit(searchform.value)" class="form-control" name="PageSize"
+                        [(ngModel)]="PageSize">Select Page Size
+                        <option>3</option>
+                        <option>5</option>
+                        <option>10</option>
+                    </select>
+                </td>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <td>
+                    <button type="button" class="btn btn-primary" (click)="ShowModal()">Add Books</button>
+                </td>
+            </tr>
+        </table>
+
+        <!-- <label name="PageNumber" [(ngModel)]="PageNumber">
+            <ngb-pagination [collectionSize]="TotalRecords" [(page)]="PageNumber" [pageSize]="PageSize"
+              (pageChange)="onSumbit(searchform.value)"></ngb-pagination>
+          </label> -->
     </form>
-
     <hr>
-    <app-actions (PageSizeEvent)="onSumbit($event)"></app-actions>
-
     <app-booklist [list]="bookslist" (DeleteEvent)="Delete($event)" (PageSizeEvent)="onSumbit($event)"></app-booklist>
 
     <svg id="clouds" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677"

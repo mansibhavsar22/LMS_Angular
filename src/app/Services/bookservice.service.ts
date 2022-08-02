@@ -14,9 +14,10 @@ export class BookserviceService {
     return this.http.get(this.BaseURl + 'Books');
   }
 
-  public Booksearch(searchdata: any) {
-    console.log(searchdata);
-    return this.http.post(this.BaseURl + 'Booksearch', searchdata);
+  public Booksearch(searchformdata: any) {
+    debugger;
+    console.log(searchformdata);
+    return this.http.post(this.BaseURl + 'Booksearch', searchformdata);
   }
 
   public BookInsert(Id:any){

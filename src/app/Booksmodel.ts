@@ -8,4 +8,5 @@ export class BooksModel {
   TotalRecords: number;
   PageNumber: number;
   PageSize: number;
+  TotalPages: number;
 }
