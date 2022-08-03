@@ -13,7 +13,7 @@
       </td>
 
       <td>
-        <button type="button" class="btn btn-primary" style="margin-left: 510px;" (click)="ShowModal()">Add Books</button>
+        <button type="button" class="btn btn-primary" style="margin-left: 510px;" (click)="ShowModal('Add')">Add Books</button>
       </td>
     </tr>
   </table>
@@ -41,7 +41,7 @@
         <td>{{ book.BookName }}</td>
         <td>{{ book.CategoryName }}</td>
         <td>{{ book.PublisherName }}</td>
-        <td><button type="button" class="btn btn-info" (click)="OpenDailog(book.BookId)">Edit</button></td>
+        <td><button type="button" class="btn btn-info" (click)="OpenDailog(book.BookId,'Update')">Edit</button></td>
         <td><button type="button" class="btn btn-danger" (click)="DeleteEvent.emit(book)">Delete</button></td>
       </tr>
     </tbody>

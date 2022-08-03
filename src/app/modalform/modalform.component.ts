@@ -20,13 +20,12 @@ export class ModalformComponent implements OnInit {
   CategoryId:any;
   PublisherId:any;
   BookId:any;
-  // form: FormGroup;
+  title:any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data:any,
     public serviceobj: BookserviceService,
     private toastr: ToastrService,
-    // private formBuilder: FormBuilder,
     public dialog: MatDialogRef<ModalformComponent>) { 
   }
 
@@ -38,19 +37,11 @@ export class ModalformComponent implements OnInit {
     //   PublisherId: [null, Validators.required],
     // });
     this.getdetails();
+    this.title = this.data.title;
   }
-
-  // getlist() {
-  //   this.serviceobj.Books().subscribe((data: any) => {
-  //     //debugger;
-  //     this.categorylist = data.categorieslist;
-  //     this.publisherlist = data.publisherslist;
-  //   });
-  // }
 
   getdetails(){
     this.serviceobj.BookInsert(this.data).subscribe((data:any) => {
-      //debugger;
       this.categorylist = data.categorieslist;
       this.publisherlist = data.publisherslist;
       this.BookId = data.BookId;
@@ -61,7 +52,6 @@ export class ModalformComponent implements OnInit {
   }
 
   onSave(insertdata: any) {
-    //debugger;
     this.serviceobj.BookInsertPost(insertdata).subscribe((data:any) => {
       this.booklist= data.booklist;
     });
@@ -69,7 +59,6 @@ export class ModalformComponent implements OnInit {
     this.toastr.success('Saved Successfully', 'Saved', {
       timeOut: 3000,
     });
-    // alert('Saved Successfully');
   }
 
   close(){

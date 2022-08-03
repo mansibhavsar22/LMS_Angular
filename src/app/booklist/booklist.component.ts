@@ -20,7 +20,6 @@ export class BooklistComponent implements OnInit {
   PageSize: number = 10;
   TotalRecords: number;
   TotalPages: any;
-
   objBook : BooksModel = new BooksModel();
 
   @Output() DeleteEvent = new EventEmitter<any>();
@@ -31,37 +30,33 @@ export class BooklistComponent implements OnInit {
     public serviceobj: BookserviceService,
     public dialog: MatDialog
   ) {
-    debugger;
     if(this.SearchingData != null){
       this.objBook.TotalPages = this.SearchingData.TotalPages;
     }
-   
   }
 
-  OpenDailog(Id: any) {
-    debugger;
+  OpenDailog(Id: any,title:any) {
     const dialogRef = this.dialog.open(ModalformComponent, {
       height: '510px',
       width: '600px',
-      data: Id,
+      data: {Id,title},
     });
-    dialogRef.afterClosed().subscribe((data: any) => {
-      debugger;
+    dialogRef.afterClosed().subscribe(() => {
       this.getlist();
       window.location.reload();
     });
   }
 
-  ShowModal() {
+  ShowModal(title:any) {
     const dialogRef = this.dialog.open(ModalformComponent, {
       height: '450px',
       width: '600px',
+      data: {title}
     });
   }
 
   getlist() {
     this.serviceobj.Booksearch(this.objBook).subscribe((data: any) => {
-      debugger;
       this.bookslist = data.bookslist;
       this.TotalRecords = data.TotalRecords;
       this.PageSize = data.PageSize;
@@ -71,13 +66,10 @@ export class BooklistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger
     if(this.SearchingData != null){
       this.objBook = this.SearchingData;
     }
     this.PageSizeChange()
-
-    console.log(this.list);
     this.objBook.TotalPages = this.list.TotalPages;
   }
 
@@ -85,14 +77,10 @@ export class BooklistComponent implements OnInit {
     if(this.SearchingData != null){
       this.objBook = this.SearchingData;
     }
-    //this.TotalRecords = this.list.length;
     this.objBook.PageNumber=1;
     this.serviceobj.Booksearch(this.objBook).subscribe((data: any) => {
-      debugger;
       this.list = data.bookslist;
       this.objBook.TotalPages = data.TotalPages;
-    console.log("Data To be Search: ");
-    console.log(this.SearchingData);
     });
   }
 
@@ -101,11 +89,8 @@ export class BooklistComponent implements OnInit {
       this.objBook = this.SearchingData;
     }
     this.serviceobj.Booksearch(this.objBook).subscribe((data: any) => {
-      debugger;
       this.list = data.bookslist;
       this.objBook.TotalPages = data.TotalPages;
-      console.log("Data To be Search: ");
-    console.log(this.SearchingData);
     });
   }
 }

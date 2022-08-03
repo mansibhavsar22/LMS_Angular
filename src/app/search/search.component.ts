@@ -20,9 +20,7 @@ export class SearchComponent implements OnInit {
   PageSize: number;
   TotalRecords: number;
   TotalPages: any;
-
   SearchingData : any;
-
   objBook : BooksModel = new BooksModel();
 
   constructor(
@@ -32,7 +30,6 @@ export class SearchComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-   // this.getlist();
    this.onSumbit();
   }
 
@@ -40,9 +37,8 @@ export class SearchComponent implements OnInit {
     this.serviceobj.Id = book.BookId;
     this.serviceobj.Delete().subscribe(() => {
       debugger;
-      // this.getlist();
       this.onSumbit();
-      this.toastr.warning('Deleted Successfully', 'Delete', {
+      this.toastr.success('Deleted Successfully', 'Delete', {
         timeOut: 3000,
       });
     });
@@ -57,19 +53,6 @@ export class SearchComponent implements OnInit {
       this.publisherlist = data.publisherslist;
       this.SearchingData.TotalPages = data.TotalPages;
       this.bookslist = data.bookslist;
-      this.TotalRecords = data.TotalRecords;
-      this.PageSize = data.PageSize;
-      this.PageNumber = data.PageNumber;
-      this.objBook.TotalPages = data.TotalPages;
-    });
-  }
-
-  getlist() {
-    this.serviceobj.Books().subscribe((data: any) => {
-      debugger;
-      this.bookslist = data.bookslist;
-      this.categorylist = data.categorieslist;
-      this.publisherlist = data.publisherslist;
       this.TotalRecords = data.TotalRecords;
       this.PageSize = data.PageSize;
       this.PageNumber = data.PageNumber;
