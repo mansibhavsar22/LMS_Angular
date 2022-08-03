@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { BooksModel } from '../Booksmodel';
 import { ModalformComponent } from '../modalform/modalform.component';
 import { BookserviceService } from '../Services/bookservice.service';
 
@@ -20,6 +21,10 @@ export class SearchComponent implements OnInit {
   TotalRecords: number;
   TotalPages: any;
 
+  SearchingData : any;
+
+  objBook : BooksModel = new BooksModel();
+
   constructor(
     public serviceobj: BookserviceService,
     private toastr: ToastrService,
@@ -27,36 +32,35 @@ export class SearchComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getlist();
+   // this.getlist();
+   this.onSumbit();
   }
 
   Delete(book: any) {
     this.serviceobj.Id = book.BookId;
     this.serviceobj.Delete().subscribe(() => {
       debugger;
-      this.getlist();
+      // this.getlist();
+      this.onSumbit();
       this.toastr.warning('Deleted Successfully', 'Delete', {
         timeOut: 3000,
       });
     });
   }
 
-  onSumbit(searchdata: any) {
+  onSumbit() {
     debugger;
-    this.serviceobj.Booksearch(searchdata).subscribe((data: any) => {
+    this.SearchingData = this.objBook;
+    this.serviceobj.Booksearch(this.objBook).subscribe((data: any) => {
       debugger;
+      this.categorylist = data.categorieslist;
+      this.publisherlist = data.publisherslist;
+      this.SearchingData.TotalPages = data.TotalPages;
       this.bookslist = data.bookslist;
       this.TotalRecords = data.TotalRecords;
       this.PageSize = data.PageSize;
       this.PageNumber = data.PageNumber;
-      this.TotalPages = data.TotalPages;
-    });
-  }
-
-  ShowModal() {
-    const dialogRef = this.dialog.open(ModalformComponent, {
-      height: '450px',
-      width: '600px',
+      this.objBook.TotalPages = data.TotalPages;
     });
   }
 
@@ -66,9 +70,10 @@ export class SearchComponent implements OnInit {
       this.bookslist = data.bookslist;
       this.categorylist = data.categorieslist;
       this.publisherlist = data.publisherslist;
+      this.TotalRecords = data.TotalRecords;
       this.PageSize = data.PageSize;
       this.PageNumber = data.PageNumber;
-      this.TotalPages = data.TotalPages;
+      this.objBook.TotalPages = data.TotalPages;
     });
   }
 }

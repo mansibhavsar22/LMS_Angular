@@ -1,4 +1,24 @@
+<div>
+  <table>
+    <tr class="col-md-12">
+      <td>
+        <label class="col-md-9">Page Size :</label>
+      </td>
+      <td>
+        <select (change)="PageSizeChange()" class="form-control" name="PageSize" [(ngModel)]="objBook.PageSize">Select Page Size
+          <option>10</option>
+          <option>5</option>
+          <option>3</option>
+        </select>
+      </td>
 
+      <td>
+        <button type="button" class="btn btn-primary" style="margin-left: 510px;" (click)="ShowModal()">Add Books</button>
+      </td>
+    </tr>
+  </table>
+</div>
+<br/>
 <div class="d-flex justify-content-center">
   <h1>Books List</h1>
 </div>
@@ -27,14 +47,7 @@
     </tbody>
   </table>
   <div class="d-flex justify-content-center">
-    <form #pagesizeform="ngForm">
-      <!-- <ngb-pagination [collectionSize]="TotalRecords" [(page)]="book.PageNumber" [maxSize]="5" [rotate]="true" [ellipses]="false" (pageChange)="PageSizeEvent.emit(pagesizeform.value)"
-      [boundaryLinks]="true"></ngb-pagination> -->
-      <label name="PageNumber" [(ngModel)]="PageNumber">
-        <ngb-pagination [collectionSize]="TotalRecords" [(page)]="PageNumber" [pageSize]="PageSize"
-          (pageChange)="PageSizeEvent.emit(pagesizeform.value)"></ngb-pagination>
-      </label>
-    </form>
-
+    <ngb-pagination [collectionSize]="this.objBook.TotalPages * 10" [maxSize]="5" [(page)]="objBook.PageNumber"
+      [pageSize]="PageSize" (pageChange)="PageChange()"></ngb-pagination>
   </div>
 </div>

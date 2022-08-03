@@ -40,13 +40,13 @@ export class ModalformComponent implements OnInit {
     this.getdetails();
   }
 
-  getlist() {
-    this.serviceobj.Books().subscribe((data: any) => {
-      //debugger;
-      this.categorylist = data.categorieslist;
-      this.publisherlist = data.publisherslist;
-    });
-  }
+  // getlist() {
+  //   this.serviceobj.Books().subscribe((data: any) => {
+  //     //debugger;
+  //     this.categorylist = data.categorieslist;
+  //     this.publisherlist = data.publisherslist;
+  //   });
+  // }
 
   getdetails(){
     this.serviceobj.BookInsert(this.data).subscribe((data:any) => {

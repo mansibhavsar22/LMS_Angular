@@ -16,7 +16,7 @@ export class BookserviceService {
 
   public Booksearch(searchformdata: any) {
     debugger;
-    console.log(searchformdata);
+    // console.log(searchformdata);
     return this.http.post(this.BaseURl + 'Booksearch', searchformdata);
   }
 
@@ -38,4 +38,3 @@ export class BookserviceService {
     return this.http.post(this.BaseURl + 'Delete?Id=', a);
   }
 }
-

@@ -17,19 +17,26 @@ export class BooklistComponent implements OnInit {
   closeResult: string;
 
   PageNumber: number;
-  PageSize: number;
+  PageSize: number = 10;
   TotalRecords: number;
   TotalPages: any;
-  book: BooksModel = new BooksModel();
+
+  objBook : BooksModel = new BooksModel();
 
   @Output() DeleteEvent = new EventEmitter<any>();
-  @Output() PageSizeEvent = new EventEmitter<any>();
   @Input() list: any;
+  @Input() SearchingData: any;
 
   constructor(
     public serviceobj: BookserviceService,
     public dialog: MatDialog
-  ) {}
+  ) {
+    debugger;
+    if(this.SearchingData != null){
+      this.objBook.TotalPages = this.SearchingData.TotalPages;
+    }
+   
+  }
 
   OpenDailog(Id: any) {
     debugger;
@@ -45,28 +52,60 @@ export class BooklistComponent implements OnInit {
     });
   }
 
+  ShowModal() {
+    const dialogRef = this.dialog.open(ModalformComponent, {
+      height: '450px',
+      width: '600px',
+    });
+  }
+
   getlist() {
-    //alert(this.PageNumber + ' ' +this.PageSize)
-    this.serviceobj.Books().subscribe((data: any) => {
+    this.serviceobj.Booksearch(this.objBook).subscribe((data: any) => {
       debugger;
       this.bookslist = data.bookslist;
       this.TotalRecords = data.TotalRecords;
       this.PageSize = data.PageSize;
       this.PageNumber = data.PageNumber;
-      this.TotalPages = data.TotalPages;
-    });
-  }
-
-  setData() {
-    this.serviceobj.Booksearch(this.book).subscribe((data: any) => {
-      debugger;
-      this.bookslist = data.bookslist;
-      this.book.TotalPages = data.TotalPages;
+      this.objBook.TotalPages = data.TotalPages;
     });
   }
 
   ngOnInit(): void {
-    this.getlist();
-    //this.setData();
+    debugger
+    if(this.SearchingData != null){
+      this.objBook = this.SearchingData;
+    }
+    this.PageSizeChange()
+
+    console.log(this.list);
+    this.objBook.TotalPages = this.list.TotalPages;
+  }
+
+  PageSizeChange(){
+    if(this.SearchingData != null){
+      this.objBook = this.SearchingData;
+    }
+    //this.TotalRecords = this.list.length;
+    this.objBook.PageNumber=1;
+    this.serviceobj.Booksearch(this.objBook).subscribe((data: any) => {
+      debugger;
+      this.list = data.bookslist;
+      this.objBook.TotalPages = data.TotalPages;
+    console.log("Data To be Search: ");
+    console.log(this.SearchingData);
+    });
+  }
+
+  PageChange(){
+    if(this.SearchingData != null){
+      this.objBook = this.SearchingData;
+    }
+    this.serviceobj.Booksearch(this.objBook).subscribe((data: any) => {
+      debugger;
+      this.list = data.bookslist;
+      this.objBook.TotalPages = data.TotalPages;
+      console.log("Data To be Search: ");
+    console.log(this.SearchingData);
+    });
   }
 }

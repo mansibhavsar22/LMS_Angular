@@ -6,7 +6,7 @@ export class BooksModel {
   CategoryId: string;
   CategoryName: string;
   TotalRecords: number;
-  PageNumber: number;
-  PageSize: number;
+  PageNumber: number = 1;
+  PageSize: number = 10;
   TotalPages: number;
 }
