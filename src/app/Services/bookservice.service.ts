@@ -30,11 +30,8 @@ export class BookserviceService {
     return this.http.post(this.BaseURl + 'BookInsertPost', insertdata);
   }
 
-  BookId:any;
-  Id:any
-  public Delete(){
-    var a= {BookId:this.Id};
+  public Delete(deletedata:any){
     debugger;
-    return this.http.post(this.BaseURl + 'Delete?Id=', a);
+    return this.http.post(this.BaseURl + 'Delete', deletedata);
   }
 }

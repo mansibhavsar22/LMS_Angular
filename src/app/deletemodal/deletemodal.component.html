@@ -1,0 +1,25 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">{{title}} Books</h2>
+            <a href="#" class="btn btn-secondary" data-dismiss="modal">&times;</a>
+        </div>
+        <div class="modal-body">
+            <div>
+                <form #deleteform="ngForm" (ngSubmit)="ondelete(deleteform.value)">
+                    <div >
+                        <h3>Are you sure you want to delete ?</h3>
+                        <input type="hidden" name="BookId" [(ngModel)]="BookId" />
+                        <label >Book Name :</label>
+                        <input type="text" name=BookName [(ngModel)]="BookName" class="form-control" />
+                    </div>
+                    <br />
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-danger" data-dismiss="modal" mat-dialog-close>Cancel</a>
+                        <button type="submit" class="btn btn-success" (click)="close()">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

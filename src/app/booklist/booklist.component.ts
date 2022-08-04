@@ -3,6 +3,7 @@ import { ModalformComponent } from '../modalform/modalform.component';
 import { BookserviceService } from '../Services/bookservice.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BooksModel } from '../Booksmodel';
+import { DeletemodalComponent } from '../deletemodal/deletemodal.component';
 
 @Component({
   selector: 'app-booklist',
@@ -47,6 +48,18 @@ export class BooklistComponent implements OnInit {
     });
   }
 
+  DeleteDialog(Id: any,title:any) {
+    const dialogRef = this.dialog.open(DeletemodalComponent, {
+      height: '415px',
+      width: '600px',
+      data: {Id,title},
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.getlist();
+      this.ngOnInit();
+    });
+  }
+
   ShowModal(title:any) {
     const dialogRef = this.dialog.open(ModalformComponent, {
       height: '450px',
@@ -56,7 +69,6 @@ export class BooklistComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       this.getlist();
       this.ngOnInit();
-      //window.location.reload();
     });
   }
 

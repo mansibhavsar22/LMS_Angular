@@ -42,7 +42,7 @@
         <td>{{ book.CategoryName }}</td>
         <td>{{ book.PublisherName }}</td>
         <td><button type="button" class="btn btn-info" (click)="OpenDailog(book.BookId,'Update')">Edit</button></td>
-        <td><button type="button" class="btn btn-danger" (click)="DeleteEvent.emit(book)">Delete</button></td>
+        <td><button type="button" class="btn btn-danger" (click)="DeleteDialog(book.BookId,'Delete')">Delete</button></td>
       </tr>
     </tbody>
   </table>

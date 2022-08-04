@@ -31,11 +31,6 @@ export class ModalformComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.data);
-    // this.form = this.formBuilder.group({
-    //   BookName: [null, [Validators.required]],
-    //   CategoryId: [null, Validators.required],
-    //   PublisherId: [null, Validators.required],
-    // });
     this.getdetails();
     this.title = this.data.title;
   }
