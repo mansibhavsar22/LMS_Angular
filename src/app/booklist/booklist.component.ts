@@ -43,7 +43,7 @@ export class BooklistComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(() => {
       this.getlist();
-      window.location.reload();
+      this.ngOnInit();
     });
   }
 
@@ -52,6 +52,11 @@ export class BooklistComponent implements OnInit {
       height: '450px',
       width: '600px',
       data: {title}
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.getlist();
+      this.ngOnInit();
+      //window.location.reload();
     });
   }
 
